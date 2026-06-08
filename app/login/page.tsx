@@ -1,12 +1,28 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Lock, ArrowRight, GraduationCap, Code, User, Phone, IdCard } from 'lucide-react';
+import { Mail, Lock, ArrowRight, GraduationCap, Code, User, IdCard } from 'lucide-react';
 
 export default function AuthPage() {
   // Toggle between Login and Register
   const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
+
+  // Handle Form Submissions
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    // এখানে আপনার রিয়েল API কল বা ব্যাকএন্ড ভ্যালিডেশন কোড বসবে।
+    // ডেমো হিসেবে সরাসরি ড্যাশবোর্ডে রিডাইরেক্ট করা হচ্ছে:
+    router.push('/dashboard');
+  };
+
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    // রেজিস্ট্রেশন লজিক সফল হলে ইউজারকে ড্যাশবোর্ড বা লগইন ফর্মে পাঠানো যেতে পারে:
+    router.push('/dashboard');
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-indigo-950 via-purple-950 to-slate-950 relative overflow-hidden font-sans">
@@ -94,13 +110,14 @@ export default function AuthPage() {
                   <p className="text-xs text-purple-200/50 mt-1">Enter your institutional credentials to log in.</p>
                 </div>
 
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-4" onSubmit={handleLoginSubmit}>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-purple-300 tracking-wider uppercase">Institutional Email</label>
                     <div className="relative group">
                       <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-300/40 group-focus-within:text-pink-400 transition-colors" />
                       <input 
                         type="email" 
+                        required
                         placeholder="student_id@cse.bubt.edu.bd" 
                         className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-purple-300/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/10 transition-all text-sm"
                       />
@@ -116,6 +133,7 @@ export default function AuthPage() {
                       <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-300/40 group-focus-within:text-pink-400 transition-colors" />
                       <input 
                         type="password" 
+                        required
                         placeholder="••••••••" 
                         className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-purple-300/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/10 transition-all text-sm"
                       />
@@ -139,7 +157,7 @@ export default function AuthPage() {
                     type="submit" 
                     className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-pink-500/10 flex items-center justify-center gap-2 transition-all mt-2 group text-sm tracking-wide"
                   >
-                    Sign In 
+                    <span>Log-in</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </motion.button>
                 </form>
@@ -170,7 +188,7 @@ export default function AuthPage() {
                   <p className="text-xs text-purple-200/50 mt-1">Join the BUBT CSE Student Hub today.</p>
                 </div>
 
-                <form className="space-y-3.5" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-3.5" onSubmit={handleRegisterSubmit}>
                   {/* Full Name */}
                   <div className="space-y-1">
                     <label className="text-xs font-bold text-purple-300 tracking-wider uppercase">Full Name</label>
@@ -178,6 +196,7 @@ export default function AuthPage() {
                       <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-purple-300/40 group-focus-within:text-pink-400 transition-colors" />
                       <input 
                         type="text" 
+                        required
                         placeholder="John Doe" 
                         className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-white placeholder-purple-300/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/10 transition-all text-xs"
                       />
@@ -192,6 +211,7 @@ export default function AuthPage() {
                         <IdCard className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-purple-300/40 group-focus-within:text-pink-400 transition-colors" />
                         <input 
                           type="text" 
+                          required
                           placeholder="22231103..." 
                           className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-white placeholder-purple-300/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/10 transition-all text-xs"
                         />
@@ -201,8 +221,9 @@ export default function AuthPage() {
                       <label className="text-xs font-bold text-purple-300 tracking-wider uppercase">Intake</label>
                       <input 
                         type="number" 
+                        required
                         placeholder="48" 
-                        className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-4 text-white placeholder-purple-300/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/10 transition-all text-xs"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 px-4 text-white placeholder-purple-300/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/10 transition-all text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                       />
                     </div>
                   </div>
@@ -214,6 +235,7 @@ export default function AuthPage() {
                       <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-purple-300/40 group-focus-within:text-pink-400 transition-colors" />
                       <input 
                         type="email" 
+                        required
                         placeholder="student_id@cse.bubt.edu.bd" 
                         className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-white placeholder-purple-300/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/10 transition-all text-xs"
                       />
@@ -227,6 +249,7 @@ export default function AuthPage() {
                       <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-purple-300/40 group-focus-within:text-pink-400 transition-colors" />
                       <input 
                         type="password" 
+                        required
                         placeholder="••••••••" 
                         className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-white placeholder-purple-300/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/10 transition-all text-xs"
                       />
@@ -240,7 +263,7 @@ export default function AuthPage() {
                     type="submit" 
                     className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-pink-500/10 flex items-center justify-center gap-2 transition-all mt-3 group text-xs tracking-wide"
                   >
-                    Create Account 
+                    <span>Create Account</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </motion.button>
                 </form>
